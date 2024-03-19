@@ -47,8 +47,9 @@ class AppState extends State{
           crossAxisAlignment=CrossAxisAlignment.center,
           mainAxisAlignment=MainAxisAlignment.center,
           children=Array(
-            Switch(true,onChange = value=>setState{
-              ()=>selected=value
+            Switch(selected,onChange = value=>setState{ ()=>
+              println(value)
+              selected=value
             })
           )
         )
