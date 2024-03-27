@@ -3,10 +3,10 @@ package com.matf.ui.widgets.material
 import com.matf.ui.Widget
 import com.matf.ui.utils.context.BuildContext
 import com.matf.ui.utils.data.CrossAxisAlignment.center
-import com.matf.ui.utils.data.MainAxisAlignment
+import com.matf.ui.utils.data.{BoxDecoration, BoxShadow, MainAxisAlignment}
 import com.matf.ui.utils.data.MainAxisAlignment.{spaceAround, spaceBetween}
 import com.matf.ui.widgets.{Container, Row, SizedBox, StatelessWidget, Text}
-import org.joml.Vector4f
+import org.joml.{Vector2f, Vector4f}
 
 import scala.collection.mutable.ArrayBuffer
 
@@ -21,6 +21,14 @@ class AppBar(val leading:Widget=null, val textValue:String="", val action:Widget
       a :+= action
 
     Container(
+      decoration = BoxDecoration(
+        boxShadow = Array(BoxShadow(
+          offset = new Vector2f(0,0),
+          size = 1,
+          blur = 1,
+          color =new Vector4f(0.5f,0.5f,0.5f,1f)
+        ))
+      ),
       color = new Vector4f(0.2f,0.4f,0.9f,1.0f),
       child = SizedBox(
         height = 70,
