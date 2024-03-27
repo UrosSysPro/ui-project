@@ -42,6 +42,6 @@ class App extends StatefulWidget{
 class AppState extends State{
   var selected=true
   override def build(context: BuildContext): Widget ={
-    AppBar("Hello World!")
+    AppBar(null, "Hello World!", null)
   }
 }
