@@ -7,7 +7,7 @@ import com.systemvi.engine.application.Game
 import com.matf.ui.Widget
 import com.matf.ui.utils.context.BuildContext
 import com.matf.ui.utils.data.{CrossAxisAlignment, MainAxisAlignment}
-import com.matf.ui.widgets.material.AppBar
+import com.matf.ui.widgets.material.{AppBar, Button}
 import com.matf.ui.widgets.{State, StatefulWidget}
 import com.systemvi.engine.utils.Utils
 import com.systemvi.engine.utils.Utils.Buffer
@@ -42,6 +42,6 @@ class App extends StatefulWidget{
 class AppState extends State{
   var selected=true
   override def build(context: BuildContext): Widget ={
-    AppBar(null, "Hello World!", null)
+    Button(null, ()=>(println("da")))
   }
 }
