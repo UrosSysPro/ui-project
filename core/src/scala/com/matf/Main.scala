@@ -1,14 +1,11 @@
 package com.matf
 
 import com.matf.ui.Scene
-import com.matf.ui.widgets.cupertino.Switch
-import com.matf.ui.widgets.{Container, Row, SizedBox}
 import com.systemvi.engine.application.Game
 import com.matf.ui.Widget
 import com.matf.ui.utils.context.BuildContext
-import com.matf.ui.utils.data.{CrossAxisAlignment, MainAxisAlignment}
-import com.matf.ui.widgets.material.{AppBar, Button}
-import com.matf.ui.widgets.{State, StatefulWidget}
+import com.matf.ui.widgets.material.Button
+import com.matf.ui.widgets.{State, StatefulWidget, Text}
 import com.systemvi.engine.utils.Utils
 import com.systemvi.engine.utils.Utils.Buffer
 import com.systemvi.engine.window.Window
@@ -42,6 +39,7 @@ class App extends StatefulWidget{
 class AppState extends State{
   var selected=true
   override def build(context: BuildContext): Widget ={
-    Button(null, ()=>(println("da")))
+    Button(Text("lol"), ()=>println("da"))
+
   }
 }

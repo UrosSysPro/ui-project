@@ -2,10 +2,10 @@ package com.matf.ui.widgets.material
 
 import com.matf.ui.Widget
 import com.matf.ui.utils.context.BuildContext
-import com.matf.ui.utils.data.Colors
-import com.matf.ui.widgets.{Container, GestureDetector, SizedBox, State, StatefulWidget, StatelessWidget}
+import com.matf.ui.utils.data.{BoxDecoration, Colors}
+import com.matf.ui.widgets.{Container, EdgeInsets, GestureDetector, Padding, SizedBox, State, StatefulWidget, StatelessWidget}
 
-class Button(child:Widget=null,val onClick:()=>Unit) extends StatefulWidget{
+class Button(val widget:Widget=null, val onClick:()=>Unit) extends StatefulWidget{
   override def createState(): State = new ButtonState()
 }
 
@@ -15,10 +15,12 @@ class ButtonState extends State{
     var mouseUpTime: Int = 0
 
     Container(
-      color = Colors.red500,
-      child = SizedBox(
-        width = 50,
-        height = 50,
+      decoration=BoxDecoration(
+        color=Colors.red500,
+        borderRadius=10
+      ),
+      child = Padding(
+        padding=EdgeInsets.symetric(horizontal = 20,vertical = 10),
         child = GestureDetector(
           mouseDown = (_, _, _, _) => {
             mouseDownTime = System.currentTimeMillis().toInt
@@ -26,12 +28,14 @@ class ButtonState extends State{
           },
           mouseUp = (_, _, _, _) => {
             mouseUpTime = System.currentTimeMillis().toInt
-            if ((mouseDownTime - mouseUpTime) < 300){
-              val onClick=widget match {
-                case button: Button=>button.onClick
-              }
+            if ((mouseDownTime - mouseUpTime) < 300)widget match {
+              case button: Button => button.onClick()
             }
+
             true
+          },
+          child=widget match {
+            case button: Button=>button.widget
           }
         )
       )
