@@ -4,8 +4,10 @@ import com.matf.ui.Scene
 import com.systemvi.engine.application.Game
 import com.matf.ui.Widget
 import com.matf.ui.utils.context.BuildContext
+import com.matf.ui.utils.data.Colors
+import com.matf.ui.widgets.cupertino.Switch
 import com.matf.ui.widgets.material.Button
-import com.matf.ui.widgets.{State, StatefulWidget, Text}
+import com.matf.ui.widgets.{Column, Container, Row, Stack, State, StatefulWidget, Text}
 import com.systemvi.engine.utils.Utils
 import com.systemvi.engine.utils.Utils.Buffer
 import com.systemvi.engine.window.Window
@@ -39,7 +41,17 @@ class App extends StatefulWidget{
 class AppState extends State{
   var selected=true
   override def build(context: BuildContext): Widget ={
-    Button(Text("lol"), ()=>println("da"))
+    var SwitchArray = new Array[Widget](10)
+    for(i <- SwitchArray.indices)
+      SwitchArray(i) = Switch(value = false)
+
+    var RowArray = new Array[Widget](10)
+    for(i <- RowArray.indices)
+      RowArray(i) =  Row(children = SwitchArray)
+
+    Column(
+      children = RowArray
+    )
 
   }
 }
