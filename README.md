@@ -1,4 +1,5 @@
 # Programske Paradime - UI
+## User Interface library ispired by Flutter, written in Scala
 
 
 
