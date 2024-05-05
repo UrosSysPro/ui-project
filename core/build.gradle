@@ -19,31 +19,14 @@ sourceSets {
 }
 
 application {
-    // Define the main class for the application.
     mainClass = 'com.matf.Main'
 }
 
 repositories {
-    maven {
-        url = uri("https://maven.pkg.github.com/UrosSysPro/systemVI")
-        credentials{
-            username 'UrosSysPro'
-            password System.getenv('GITHUB_API_KEY')
-        }
-    }
     mavenCentral()
 }
 
-import org.gradle.internal.os.OperatingSystem
-
-def osName(){
-    switch (OperatingSystem.current()){
-        case OperatingSystem.WINDOWS:return 'windows'
-        case OperatingSystem.LINUX:return 'linux'
-        case OperatingSystem.MAC_OS:return 'macos'
-    }
-}
 dependencies {
-    implementation 'com.systempro.systemvi:system-vi-windows:0.7.3'
+    implementation files('./libs/systemVI-0.7.3-all.jar')
     implementation 'org.scala-lang:scala-library:2.11.12'
 }

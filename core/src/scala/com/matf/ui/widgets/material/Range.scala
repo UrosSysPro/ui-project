@@ -59,7 +59,7 @@ class RangeState extends State {
       lineWidth,
       lineHeight,
       new Vector4f(0,0,0,1),
-      lineHeight/2
+      lineHeight/2,context
     )
     val range=widget match {
       case range: Range=>range
@@ -69,8 +69,7 @@ class RangeState extends State {
     context.renderer.rect(
       widget.position.x+p*lineWidth,
       widget.position.y,
-      r*2,r*2,new Vector4f(1),
-      r
+      r*2,r*2,new Vector4f(1),context
     )
   }
 }

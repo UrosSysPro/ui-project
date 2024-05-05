@@ -4,17 +4,20 @@ import com.matf.ui.utils.context.{BuildContext, DrawContext}
 import com.matf.ui.utils.data.Colors
 import com.matf.ui.utils.tree.{Animator, EventListenerFinder, TreeBuilder}
 import com.matf.ui.widgets.{GestureDetector, State}
+import com.systemvi.engine.camera.Camera3
+import com.systemvi.engine.ui.utils.font.Font
 import com.systemvi.engine.utils.Utils
 import com.systemvi.engine.window.{InputProcessor, Window}
-import org.joml.Vector2f
+import org.joml.{Matrix4f, Vector2f}
 
-class Scene(val root:Widget,window:Window) extends InputProcessor{
+class Scene(val root:Widget,window:Window,val font:Font) extends InputProcessor{
   //screen info
   var width: Int =window.getWidth
   var height: Int =window.getHeight
   //Scene state
   val states:Map[String, State]=Map[String,State]()
-  val renderer:WidgetRenderer=new WidgetRenderer(window)
+  val camera:Camera3=Camera3.builder2d().build()
+  val renderer:WidgetRenderer2=new WidgetRenderer2(camera,font)
   //event listeners
   var focused:GestureDetector=null
   val mouse=new Vector2f()
@@ -22,7 +25,7 @@ class Scene(val root:Widget,window:Window) extends InputProcessor{
   val eventListenerFinder=new EventListenerFinder()
   val threeBuilder=new TreeBuilder(states)
   val context=new BuildContext()
-  val drawContext=DrawContext(renderer)
+  val drawContext=DrawContext(renderer,new Matrix4f())
   val animator:Animator=new Animator()
   //initial build
   threeBuilder.build(root,s"/${root.getClass.getSimpleName}",context)
@@ -33,8 +36,8 @@ class Scene(val root:Widget,window:Window) extends InputProcessor{
     this.height=height
     root.calculateSize(new Vector2f(width,height))
     root.calculatePosition(new Vector2f(0,0))
-    renderer.camera.setScreenSize(width,height)
-    renderer.camera.setPosition(width/2,height/2,0)
+    renderer.camera.orthographic(-width/2,width/2,-height/2,height/2,0,100)
+    renderer.camera.position(width/2,height/2,0)
     renderer.camera.update()
     true
   }
@@ -116,7 +119,7 @@ class Scene(val root:Widget,window:Window) extends InputProcessor{
 }
 
 object Scene{
-  def apply(root: Widget, window: Window): Scene = {
-    new Scene(root, window)
+  def apply(root: Widget, window: Window,font:Font): Scene = {
+    new Scene(root, window,font)
   }
 }

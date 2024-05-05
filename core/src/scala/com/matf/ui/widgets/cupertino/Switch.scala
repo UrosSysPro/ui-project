@@ -40,7 +40,7 @@ class SwitchState extends State{
       size.x,
       size.y,
       if(value)selectedColor else unselectedColor,
-      size.y/2
+      size.y/2,context
     )
     val shadowBlur:Float=4
     val shadowSize:Float=4
@@ -52,7 +52,7 @@ class SwitchState extends State{
       circleSize-2*padding+shadowSize*2,
       new Vector4f(0.5f),
       circleSize/2-padding+shadowSize,
-      shadowBlur
+      shadowBlur,context
     )
     //circle
     context.renderer.rect(
@@ -61,7 +61,7 @@ class SwitchState extends State{
       circleSize-2*padding,
       circleSize-2*padding,
       new Vector4f(1.0f),
-      (circleSize-2*padding)/2
+      (circleSize-2*padding)/2,context
     )
   }
 }

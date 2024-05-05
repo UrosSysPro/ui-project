@@ -3,6 +3,7 @@ package com.matf.ui.widgets
 import com.matf.ui.utils.context.{BuildContext, DrawContext}
 import com.matf.ui.utils.data.BoxDecoration
 import com.matf.ui.{Widget, WidgetRenderer}
+import com.systemvi.engine.ui.Drawable
 import org.joml.Vector4f
 
 
@@ -13,6 +14,7 @@ class Container(child:Widget, val color:Vector4f, decoration: BoxDecoration) ext
     if(decoration!=null){
       decoration match {
         case BoxDecoration(color, borderRadius, _, boxShadow)=>
+
           boxShadow.foreach{
             boxShadow=>context.renderer.rect(
               position.x+boxShadow.offset.x-boxShadow.size/2f,
@@ -21,13 +23,13 @@ class Container(child:Widget, val color:Vector4f, decoration: BoxDecoration) ext
               size.y+boxShadow.size,
               boxShadow.color,
               borderRadius,
-              boxShadow.blur
-            )
+              boxShadow.blur,context)
+
           }
-          context.renderer.rect(position.x,position.y,size.x,size.y,color,borderRadius,1)
+          context.renderer.rect(position.x,position.y,size.x,size.y,color,borderRadius,1,context)
       }
     }else if(color!=null){
-      context.renderer.rect(position.x,position.y,size.x,size.y,color)
+      context.renderer.rect(position.x,position.y,size.x,size.y,color,context)
     }
     super.draw(context)
   }

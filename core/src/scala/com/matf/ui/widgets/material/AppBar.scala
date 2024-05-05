@@ -16,7 +16,7 @@ class AppBar(val leading:Widget=null, val textValue:String="", val action:Widget
     if(leading != null)
       a :+= leading
     if(textValue != "")
-      a :+= Text(text = textValue)
+      a :+= Text(text = textValue,font = null)
     if(action != null)
       a :+= action
 

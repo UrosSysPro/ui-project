@@ -7,6 +7,7 @@ import com.matf.ui.utils.data.{Colors, MainAxisAlignment}
 import com.matf.ui.widgets.{Column, Container, GestureDetector, Row, SizedBox, State, StatefulWidget}
 import com.matf.ui.widgets.cupertino.Switch
 import com.systemvi.engine.application.Game
+import com.systemvi.engine.ui.utils.font.Font
 import com.systemvi.engine.utils.Utils
 import com.systemvi.engine.utils.Utils.Buffer
 import com.systemvi.engine.window.Window
@@ -17,7 +18,8 @@ class App extends Game(3,3,60,800,600,"Switch Snake"){
   override def setup(window: Window): Unit = {
     scene=Scene(
       window = window,
-      root=new SnakeGame()
+      root=new SnakeGame(),
+      font = Font.load("assets/font.PNG","assets/font.json")
     )
     setInputProcessor(scene)
   }

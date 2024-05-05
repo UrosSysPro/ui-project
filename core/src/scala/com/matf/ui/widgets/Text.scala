@@ -2,7 +2,7 @@ package com.matf.ui.widgets
 
 import com.matf.ui.Widget
 import com.matf.ui.utils.context.{BuildContext, DrawContext}
-import com.matf.ui.utils.font.Font
+import com.systemvi.engine.ui.utils.font.Font
 import org.joml.{Vector2f, Vector4f}
 case class TextStyle(
                       color:Vector4f=new Vector4f(0,0,0,1),

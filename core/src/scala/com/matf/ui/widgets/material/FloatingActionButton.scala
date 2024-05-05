@@ -2,7 +2,7 @@ package com.matf.ui.widgets.material
 
 import com.matf.ui.Widget
 import com.matf.ui.utils.data.{Border, BoxDecoration, BoxShadow, Colors}
-import com.matf.ui.widgets.{EdgeInsets, SizedBox}
+import com.matf.ui.widgets.{Center, EdgeInsets, SizedBox}
 import org.joml.{Vector2f, Vector4f}
 
 object FloatingActionButton {
