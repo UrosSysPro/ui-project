@@ -2,40 +2,34 @@ package com.matf.ui.widgets.material
 
 import com.matf.ui.Widget
 import com.matf.ui.utils.context.BuildContext
-import com.matf.ui.utils.data.CrossAxisAlignment.center
-import com.matf.ui.utils.data.{BoxDecoration, BoxShadow, MainAxisAlignment}
-import com.matf.ui.utils.data.MainAxisAlignment.{spaceAround, spaceBetween}
-import com.matf.ui.widgets.{Container, Row, SizedBox, StatelessWidget, Text}
+import com.matf.ui.utils.data.{Alignment, AxisSize, BoxDecoration, BoxShadow, Colors}
+import com.matf.ui.widgets.{Align, Container, Expanded, Row, SizedBox, StatelessWidget}
 import org.joml.{Vector2f, Vector4f}
 
-import scala.collection.mutable.ArrayBuffer
-
-class AppBar(val leading:Widget=null, val textValue:String="", val action:Widget=null) extends StatelessWidget{
+class AppBar(
+              leading:Widget,
+              title:Widget,
+              actions:Array[Widget],
+              color:Vector4f,
+              shadow:BoxShadow,
+              height:Float
+            ) extends StatelessWidget{
   override def build(context: BuildContext): Widget = {
-    var a : Array[Widget] = Array[Widget]()
-    if(leading != null)
-      a :+= leading
-    if(textValue != "")
-      a :+= Text(text = textValue,font = null)
-    if(action != null)
-      a :+= action
-
     Container(
       decoration = BoxDecoration(
-        boxShadow = Array(BoxShadow(
-          offset = new Vector2f(0,0),
-          size = 1,
-          blur = 1,
-          color =new Vector4f(0.5f,0.5f,0.5f,1f)
-        ))
+        color=color,
+        boxShadow = Array(shadow)
       ),
-      color = new Vector4f(0.2f,0.4f,0.9f,1.0f),
-      child = SizedBox(
-        height = 70,
-        child = Row(
-          crossAxisAlignment = center,
-          mainAxisAlignment = spaceBetween,
-          children = a
+      child=SizedBox(
+        height=height,
+        child=Row(
+          mainAxisSize=AxisSize.expand,
+          children = (Array(leading,Expanded(
+            child=Align(
+              alignment = Alignment.centerRight,
+              child=title
+            )
+          ))++actions).filter(p=>p!=null)
         )
       )
     )
@@ -43,6 +37,13 @@ class AppBar(val leading:Widget=null, val textValue:String="", val action:Widget
 }
 
 object AppBar{
-  def apply(leading:Widget=null,textValue: String="", action:Widget=null): AppBar = new AppBar(leading, textValue, action)
+  def apply(leading: Widget=null,
+            title: Widget=null,
+            actions: Array[Widget]=Array(),
+            color: Vector4f=Colors.blue500,
+            shadow: BoxShadow=BoxShadow(
+              offset = new Vector2f(0,5), blur = 10, color = new Vector4f(0,0,0,0.3f)
+            ),
+            height: Float=70
+           ): AppBar = new AppBar(leading, title, actions, color, shadow, height)
 }
-

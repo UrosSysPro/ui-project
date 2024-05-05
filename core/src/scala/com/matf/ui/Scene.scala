@@ -1,7 +1,6 @@
 package com.matf.ui
 
 import com.matf.ui.utils.context.{BuildContext, DrawContext}
-import com.matf.ui.utils.data.Colors
 import com.matf.ui.utils.tree.{Animator, EventListenerFinder, TreeBuilder}
 import com.matf.ui.widgets.{GestureDetector, State}
 import com.systemvi.engine.camera.Camera3

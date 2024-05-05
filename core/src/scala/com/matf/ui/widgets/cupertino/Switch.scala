@@ -1,6 +1,8 @@
 package com.matf.ui.widgets.cupertino
 
+import com.systemvi.engine.math.Bezier2f
 import com.matf.ui.Widget
+import com.matf.ui.utils.animation.{Animatable, AnimationController, AnimationStates}
 import com.matf.ui.utils.context.{BuildContext, DrawContext}
 import com.matf.ui.widgets.cupertino.Switch.{padding, selectedColor, unselectedColor}
 import com.matf.ui.widgets.{GestureDetector, SizedBox, State, StatefulWidget}
@@ -10,8 +12,28 @@ class Switch(val value:Boolean,val onChange:Boolean=>Unit) extends StatefulWidge
   override def createState(): State = new SwitchState()
 }
 
-class SwitchState extends State{
-  override def build(context:BuildContext): Widget =
+class SwitchState extends State with Animatable{
+
+  var controller:AnimationController=null
+  var timing = new Bezier2f(Array(
+    new Vector2f(0f,0f),
+    new Vector2f(0.35f,.86f),
+    new Vector2f(0f,1.01f),
+    new Vector2f(1.0f)
+  ))
+
+  override def init(): Unit = {
+    controller= AnimationController(
+      animatable = this,
+      milliseconds=200
+    )
+  }
+  override def build(context:BuildContext): Widget = {
+    widget match {
+      case switch: Switch=>
+        if(!switch.value && controller.getState == AnimationStates.end)controller.setState(AnimationStates.reverse)
+        if( switch.value && controller.getState == AnimationStates.start)controller.setState(AnimationStates.running)
+    }
     SizedBox(
       width=55,height=30,
       child = GestureDetector(
@@ -24,14 +46,17 @@ class SwitchState extends State{
         }
       )
     )
+  }
+
   override def draw(context:DrawContext): Unit = {
     val value=widget match {
       case switch: Switch=>switch.value
     }
+    val d = timing.get(controller.value).y
     val size=widget.size
     val position=widget.position
     val circleSize:Float = size.y
-    val x:Float = if (value) position.x + size.x - circleSize else position.x
+    val x:Float =  d*(position.x + size.x - circleSize)+ (1-d)*position.x
     val y:Float = position.y
     //background
     context.renderer.rect(
@@ -39,8 +64,11 @@ class SwitchState extends State{
       position.y,
       size.x,
       size.y,
-      if(value)selectedColor else unselectedColor,
-      size.y/2,context
+      new Vector4f()
+        .add(new Vector4f(selectedColor).mul(d))
+        .add(new Vector4f(unselectedColor).mul(1-d)),
+      size.y/2,blur = 1,
+      context
     )
     val shadowBlur:Float=4
     val shadowSize:Float=4
@@ -52,7 +80,8 @@ class SwitchState extends State{
       circleSize-2*padding+shadowSize*2,
       new Vector4f(0.5f),
       circleSize/2-padding+shadowSize,
-      shadowBlur,context
+      shadowBlur,
+      context
     )
     //circle
     context.renderer.rect(
@@ -61,7 +90,9 @@ class SwitchState extends State{
       circleSize-2*padding,
       circleSize-2*padding,
       new Vector4f(1.0f),
-      (circleSize-2*padding)/2,context
+      (circleSize-2*padding)/2,
+      blur = 1,
+      context
     )
   }
 }
