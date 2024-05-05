@@ -2,47 +2,60 @@ package com.matf.ui.widgets.material
 
 import com.matf.ui.Widget
 import com.matf.ui.utils.context.BuildContext
+import com.matf.ui.utils.data
 import com.matf.ui.utils.data.{BoxDecoration, Colors}
-import com.matf.ui.widgets.{Container, EdgeInsets, GestureDetector, Padding, SizedBox, State, StatefulWidget, StatelessWidget}
+import com.matf.ui.widgets.{Container, EdgeInsets, GestureDetector, Padding, State, StatefulWidget, StatelessWidget}
+import org.joml.Vector4f
 
-class Button(val widget:Widget=null, val onClick:()=>Unit) extends StatefulWidget{
+class Button(val childWidget:Widget,val decoration: BoxDecoration,val onTap:()=>Unit,var padding: EdgeInsets) extends StatefulWidget{
   override def createState(): State = new ButtonState()
 }
 
 class ButtonState extends State{
-  override def build(context: BuildContext): Widget = {
-    var mouseDownTime: Int = 0
-    var mouseUpTime: Int = 0
-
-    Container(
-      decoration=BoxDecoration(
-        color=Colors.red500,
-        borderRadius=10
+  var mouseDownStart:Long=0
+  override def build(context: BuildContext): Widget = widget match {
+    case button: Button => GestureDetector(
+      child=Container(
+        child = Padding(
+          padding=button.padding,
+          child=button.childWidget
+        ),
+        decoration = button.decoration
       ),
-      child = Padding(
-        padding=EdgeInsets.symetric(horizontal = 20,vertical = 10),
-        child = GestureDetector(
-          mouseDown = (_, _, _, _) => {
-            mouseDownTime = System.currentTimeMillis().toInt
-            true
-          },
-          mouseUp = (_, _, _, _) => {
-            mouseUpTime = System.currentTimeMillis().toInt
-            if ((mouseDownTime - mouseUpTime) < 300)widget match {
-              case button: Button => button.onClick()
-            }
-
-            true
-          },
-          child=widget match {
-            case button: Button=>button.widget
-          }
-        )
-      )
+      mouseDown = (_,_,_,_)=>{
+        mouseDownStart=System.currentTimeMillis()
+        true
+      },
+      mouseUp = (_,_,_,_)=>{
+        if(System.currentTimeMillis()-mouseDownStart<300){
+          button.onTap()
+        }
+        true
+      }
     )
   }
 }
-
 object Button{
-  def apply(child:Widget=null,onClick:()=>Unit): Button = new Button(child, onClick)
+  def filled(
+              child:Widget,
+              decoration: BoxDecoration,
+              onTap:()=>Unit,
+              padding:EdgeInsets=EdgeInsets.symetric(horizontal = 20,vertical = 10)
+            ):Button=new Button(childWidget = child, decoration = decoration, onTap = onTap,padding)
+  def outlined(
+                child:Widget,
+                color:Vector4f=Colors.black,
+                borderRadius:Float=10,
+                borderWidth:Float=2,
+                onTap:()=>Unit,
+                padding: EdgeInsets=EdgeInsets.symetric(horizontal = 20,vertical = 10)
+              ):Button=
+    new Button(
+      childWidget=child,
+      decoration = BoxDecoration(
+        color=new Vector4f(color.x,color.y,color.z,0),
+        border = data.Border(color,borderWidth),
+        borderRadius=borderRadius
+      ), onTap = onTap,padding
+    )
 }

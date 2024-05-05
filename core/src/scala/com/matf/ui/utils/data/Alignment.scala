@@ -1,6 +1,5 @@
 package com.matf.ui.utils.data
 
-import com.matf.ui.utils.data
 
 object Alignment extends Enumeration {
   type Alignment=Value

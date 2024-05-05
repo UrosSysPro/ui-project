@@ -2,20 +2,18 @@ package com.matf.ui.widgets
 
 import com.matf.ui.Widget
 import com.matf.ui.utils.context.{BuildContext, DrawContext}
+import com.matf.ui.utils.font.Font
 import org.joml.{Vector2f, Vector4f}
 case class TextStyle(
-                      fontSize:Float=16,
-                      fontWeight:Float=1,
                       color:Vector4f=new Vector4f(0,0,0,1),
-                      charSpacing:Float=1,
-                      lineSpacing:Float=2
+                      scale:Float=1
                     )
-class Text(val text:String="",val style:TextStyle=TextStyle()) extends StatelessWidget {
+class Text(val text:String="",val style:TextStyle=TextStyle(),val font: Font) extends StatelessWidget {
   override def build(context: BuildContext): Widget = null
   override def calculateSize(maxParentSize: Vector2f): Vector2f = {
-    val glyphHeight=style.fontSize
-    val glyphWidth=glyphHeight*0.6f
-    val charSpacing=style.charSpacing
+    val glyphHeight=font.config.charHeight*style.scale
+    val charSpacing=font.config.charSpacing*style.scale
+    val lineSpacing=font.config.lineSpacing*style.scale
     var x=0f
     var y=0f
     var width=0f
@@ -26,13 +24,15 @@ class Text(val text:String="",val style:TextStyle=TextStyle()) extends Stateless
       if(newLine){
         x=0
         lines+=1
-        y+=glyphHeight+style.lineSpacing
-        height+=glyphHeight+style.lineSpacing
+        y+=glyphHeight+lineSpacing
+        height+=glyphHeight+lineSpacing
         newLine=false
       }
       char match {
         case '\n'=>newLine=true
-        case _=> x+=glyphWidth+charSpacing
+        case _=>
+          val s=font.symbols.find(s=>s.id.toChar==char).get
+          x+=s.xadvance*style.scale+charSpacing
       }
       width=Math.min(Math.max(x,width),maxParentSize.x)
       if(x>maxParentSize.x)newLine=true
@@ -40,34 +40,36 @@ class Text(val text:String="",val style:TextStyle=TextStyle()) extends Stateless
     size.set(width,height)
   }
   override def draw(context: DrawContext): Unit = {
-    val glyphHeight=style.fontSize
-    val glyphWidth=glyphHeight*0.6f
-    val charSpacing=style.charSpacing
+    val glyphHeight=font.config.charHeight*style.scale
+    val charSpacing=font.config.charSpacing*style.scale
+    val lineSpacing=font.config.lineSpacing*style.scale
     var x=0f
-    var y=0f
+    var y = 0f
     var newLine=false
     var lines=1
     for(char<-text){
       if(newLine){
         x=0
         lines+=1
-        y+=glyphHeight+style.lineSpacing
+        y+=glyphHeight+lineSpacing
         newLine=false
       }
       char match {
         case '\n'=>newLine=true
         case ' '=>
-          x+=glyphWidth
+          val s=font.symbols.find(s=>s.id.toChar==char).get
+          x+=s.xadvance*style.scale
         case char:Char=>
-          val height=if (char.isUpper)glyphHeight else glyphHeight-4
-          context.renderer.rect(x+position.x,y+position.y+glyphHeight-height,glyphWidth,height,style.color,3,1)
-          x+=glyphWidth+charSpacing
+          val s=font.symbols.find(s=>s.id.toChar==char).get
+          context.renderer.drawSymbol(s,position.x+x,position.y+y,style.scale,style.color,context)
+          x+=s.xadvance*style.scale+charSpacing
       }
       if(x>size.x)newLine=true
     }
   }
 }
 
-object Text{
-  def apply(text: String="", style: TextStyle=TextStyle()): Text = new Text(text, style)
+object Text {
+  def apply(text: String = "", style: TextStyle = TextStyle(),font: Font): Text = new Text(text, style,font)
 }
+
