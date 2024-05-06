@@ -1,8 +1,9 @@
 package com.matf.ui.widgets.material
 
-import com.systemvi.engine.ui.Widget
-import com.systemvi.engine.ui.utils.context.{BuildContext, DrawContext}
-import com.systemvi.engine.ui.widgets.{GestureDetector, SizedBox, State, StatefulWidget}
+import com.matf.ui.utils.data.Colors
+import com.matf.ui.Widget
+import com.matf.ui.utils.context.{BuildContext, DrawContext}
+import com.matf.ui.widgets.{GestureDetector, SizedBox, State, StatefulWidget}
 import org.joml.{Vector2f, Vector4f}
 
 class Range(
@@ -58,7 +59,7 @@ class RangeState extends State {
       widget.position.y+r-lineHeight/2,
       lineWidth,
       lineHeight,
-      new Vector4f(0,0,0,1),
+      Colors.purple700,
       lineHeight/2,context
     )
     val range=widget match {
@@ -69,7 +70,7 @@ class RangeState extends State {
     context.renderer.rect(
       widget.position.x+p*lineWidth,
       widget.position.y,
-      r*2,r*2,new Vector4f(1),context
+      r*2,r*2,Colors.purple500,r,1,context
     )
   }
 }

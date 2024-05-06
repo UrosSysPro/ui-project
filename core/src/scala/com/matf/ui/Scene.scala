@@ -3,9 +3,11 @@ package com.matf.ui
 import com.matf.ui.utils.context.{BuildContext, DrawContext}
 import com.matf.ui.utils.tree.{Animator, EventListenerFinder, TreeBuilder}
 import com.matf.ui.widgets.{GestureDetector, State}
+import com.systemvi.engine.application.Game
 import com.systemvi.engine.camera.Camera3
 import com.systemvi.engine.ui.utils.font.Font
 import com.systemvi.engine.utils.Utils
+import com.systemvi.engine.utils.Utils.Buffer
 import com.systemvi.engine.window.{InputProcessor, Window}
 import org.joml.{Matrix4f, Vector2f}
 
@@ -120,5 +122,35 @@ class Scene(val root:Widget,window:Window,val font:Font) extends InputProcessor{
 object Scene{
   def apply(root: Widget, window: Window,font:Font): Scene = {
     new Scene(root, window,font)
+  }
+}
+
+object UIApplication{
+  val font:Font=Font.load("assets/font.PNG","assets/font.json")
+}
+class UIApplication(title:String,home:Widget) extends Game(3,3,60,800,600,title){
+  var scene:Scene=null
+  override def setup(window: Window): Unit = {
+    scene=new Scene(
+      window=window,
+      root = home,
+      font = UIApplication.font
+    )
+    setInputProcessor(scene)
+  }
+  override def loop(delta: Float): Unit = {
+    Utils.clear(0,0,0,0,Buffer.COLOR_BUFFER)
+    scene.animate(delta)
+    scene.resize(scene.width,scene.height)
+    scene.draw()
+  }
+
+  override def resize(width: Int, height: Int): Boolean = scene.resize(width, height)
+}
+
+object runApp{
+  def apply(title:String,home:Widget): Unit = {
+
+    new UIApplication(title,home).run()
   }
 }
