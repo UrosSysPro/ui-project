@@ -1,6 +1,7 @@
 package com.matf.ui
 
 import com.matf.ui.utils.context.{BuildContext, DrawContext}
+import com.matf.ui.utils.font.Fonts
 import com.matf.ui.utils.tree.{Animator, EventListenerFinder, TreeBuilder}
 import com.matf.ui.widgets.{GestureDetector, State}
 import com.systemvi.engine.application.Game
@@ -10,6 +11,8 @@ import com.systemvi.engine.utils.Utils
 import com.systemvi.engine.utils.Utils.Buffer
 import com.systemvi.engine.window.{InputProcessor, Window}
 import org.joml.{Matrix4f, Vector2f}
+
+import javax.swing.text.StyledEditorKit.FontSizeAction
 
 class Scene(val root:Widget,window:Window,val font:Font) extends InputProcessor{
   //screen info
@@ -125,16 +128,13 @@ object Scene{
   }
 }
 
-object UIApplication{
-  val font:Font=Font.load("assets/font.PNG","assets/font.json")
-}
 class UIApplication(title:String,home:Widget) extends Game(3,3,60,800,600,title){
   var scene:Scene=null
   override def setup(window: Window): Unit = {
     scene=new Scene(
       window=window,
       root = home,
-      font = UIApplication.font
+      font = Fonts.pixels
     )
     setInputProcessor(scene)
   }

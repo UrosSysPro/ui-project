@@ -3,6 +3,7 @@ package com.matf.dancingrange
 import com.matf.ui.utils.animation.{Animatable, AnimationController, AnimationStates}
 import com.matf.ui.utils.context.BuildContext
 import com.matf.ui.utils.data.{Colors, MainAxisAlignment}
+import com.matf.ui.utils.font.Fonts
 import com.matf.ui.widgets.{material, _}
 import com.matf.ui.{Scene, Widget}
 import com.systemvi.engine.application.Game
@@ -17,7 +18,7 @@ class App extends Game(3,3,60,800,600,"Switch Snake"){
     scene=Scene(
       window = window,
       root=new DancingRange(),
-      font = Font.load("assets/font.PNG","assets/font.json")
+      font = Fonts.pixels
     )
     setInputProcessor(scene)
   }
