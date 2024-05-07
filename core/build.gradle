@@ -27,6 +27,6 @@ repositories {
 }
 
 dependencies {
-    implementation files('./libs/systemVI-0.7.3-all.jar')
+    implementation files('./libs/systemVI-0.7.3-windows.jar')
     implementation 'org.scala-lang:scala-library:2.11.12'
 }
