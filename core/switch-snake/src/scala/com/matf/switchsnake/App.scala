@@ -1,14 +1,13 @@
 package com.matf.switchsnake
 
 import com.matf.ui.utils.animation.{Animatable, AnimationController, AnimationStates}
-import com.matf.ui.{Scene, Widget}
 import com.matf.ui.utils.context.BuildContext
 import com.matf.ui.utils.data.{Colors, MainAxisAlignment}
 import com.matf.ui.utils.font.Fonts
-import com.matf.ui.widgets.{Column, Container, GestureDetector, Row, SizedBox, State, StatefulWidget}
 import com.matf.ui.widgets.cupertino.Switch
+import com.matf.ui.widgets._
+import com.matf.ui.{Scene, Widget}
 import com.systemvi.engine.application.Game
-import com.systemvi.engine.ui.utils.font.Font
 import com.systemvi.engine.utils.Utils
 import com.systemvi.engine.utils.Utils.Buffer
 import com.systemvi.engine.window.Window

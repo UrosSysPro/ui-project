@@ -19,7 +19,7 @@ sourceSets {
 }
 
 application {
-    mainClass = 'com.matf.Main'
+    mainClass = 'com.matf.switchsnake.Main'
 }
 
 repositories {
@@ -27,6 +27,7 @@ repositories {
 }
 
 dependencies {
-    implementation files('./libs/systemVI-0.7.3-linux.jar')
+    implementation files('../libs/systemVI-0.7.3-linux.jar')
+    implementation project(":core")
     implementation 'org.scala-lang:scala-library:2.11.12'
 }

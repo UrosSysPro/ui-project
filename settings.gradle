@@ -6,5 +6,5 @@
  */
 
 rootProject.name = 'ui-project'
-include 'core'
+include 'core', 'core:switch-snake'
 
