@@ -3,35 +3,10 @@ package com.matf.switchsnake
 import com.matf.ui.utils.animation.{Animatable, AnimationController, AnimationStates}
 import com.matf.ui.utils.context.BuildContext
 import com.matf.ui.utils.data.{Colors, MainAxisAlignment}
-import com.matf.ui.utils.font.Fonts
 import com.matf.ui.widgets.cupertino.Switch
 import com.matf.ui.widgets._
-import com.matf.ui.{Scene, Widget}
-import com.systemvi.engine.application.Game
-import com.systemvi.engine.utils.Utils
-import com.systemvi.engine.utils.Utils.Buffer
-import com.systemvi.engine.window.Window
+import com.matf.ui.Widget
 import org.lwjgl.glfw.GLFW
-
-class App extends Game(3,3,60,800,600,"Switch Snake"){
-  var scene:Scene=null
-  override def setup(window: Window): Unit = {
-    scene=Scene(
-      window = window,
-      root=new SnakeGame(),
-      font = Fonts.pixels
-    )
-    setInputProcessor(scene)
-  }
-
-  override def loop(delta: Float): Unit = {
-    Utils.clear(0,0,0,1,Buffer.COLOR_BUFFER)
-    scene.animate(delta)
-    scene.resize(scene.width,scene.height)
-    scene.draw()
-  }
-}
-
 
 class SnakeGame extends StatefulWidget{
   override def createState(): State = new SnakeGameState()
