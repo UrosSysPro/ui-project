@@ -131,6 +131,7 @@ object Scene{
 class UIApplication(title:String,home:Widget) extends Game(3,3,60,800,600,title){
   var scene:Scene=null
   override def setup(window: Window): Unit = {
+    Fonts.load()
     scene=new Scene(
       window=window,
       root = home,
@@ -150,7 +151,6 @@ class UIApplication(title:String,home:Widget) extends Game(3,3,60,800,600,title)
 
 object runApp{
   def apply(title:String,home:Widget): Unit = {
-
     new UIApplication(title,home).run()
   }
 }

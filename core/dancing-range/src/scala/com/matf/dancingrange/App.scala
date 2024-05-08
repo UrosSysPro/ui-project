@@ -54,34 +54,34 @@ class DancingRangeState extends State with Animatable{
     controller.setState(AnimationStates.running)
   }
   override def build(context: BuildContext): Widget ={
-      Container(
-        color = Colors.white,
-        child = Row(
-          mainAxisAlignment=MainAxisAlignment.start,
-          children = (0 until width).map{ i=>
-            SizedBox(
-              width = 200,
-              child = Column(
-                children = (0 until height).map{j=>
-                  SizedBox(
-                    height = 30,
-                    child = material.Range(
-                      Math.sin(
-                        controller.value*Math.PI*2+
-                          j.toFloat/5+
-                          i%2*Math.PI
-                      ).toFloat,
-                      1,
-                      -1,
-                      0.001f,
-                      onChange = _ => {}
-                    )
+    Container(
+      color = Colors.white,
+      child = Row(
+        mainAxisAlignment=MainAxisAlignment.start,
+        children = (0 until width).map{ i=>
+          SizedBox(
+            width = 200,
+            child = Column(
+              children = (0 until height).map{j=>
+                SizedBox(
+                  height = 30,
+                  child = material.Range(
+                    Math.sin(
+                      controller.value*Math.PI*2+
+                        j.toFloat/5+
+                        i%2*Math.PI
+                    ).toFloat,
+                    1,
+                    -1,
+                    0.001f,
+                    onChange = _ => {}
                   )
-                }.toArray
-              )
+                )
+              }.toArray
             )
-          }.toArray
-        )
+          )
+        }.toArray
+      )
 
     )
   }
