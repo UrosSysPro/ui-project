@@ -25,9 +25,15 @@ application {
 repositories {
     mavenCentral()
 }
+import org.gradle.internal.os.OperatingSystem
+
+var os=OperatingSystem.current()
+var osName=''
+if(os.isLinux())osName='linux'
+if(os.isWindows())osName='windows'
 
 dependencies {
-    implementation files('./libs/systemVI-0.7.3-linux.jar')
+    implementation files('./libs/systemVI-0.7.3-'+osName+'.jar')
     implementation 'org.scala-lang:scala-library:2.11.12'
 }
 
@@ -40,7 +46,7 @@ subprojects {
     }
 
     dependencies {
-        implementation files('../libs/systemVI-0.7.3-linux.jar')
+        implementation files('../libs/systemVI-0.7.3-'+osName+'.jar')
         implementation 'org.scala-lang:scala-library:2.11.12'
         implementation project(":core")
     }
