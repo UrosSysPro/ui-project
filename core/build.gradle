@@ -30,3 +30,18 @@ dependencies {
     implementation files('./libs/systemVI-0.7.3-linux.jar')
     implementation 'org.scala-lang:scala-library:2.11.12'
 }
+
+subprojects {
+    apply plugin:'scala'
+    apply plugin: 'application'
+
+    repositories {
+        mavenCentral()
+    }
+
+    dependencies {
+        implementation files('../libs/systemVI-0.7.3-linux.jar')
+        implementation 'org.scala-lang:scala-library:2.11.12'
+        implementation project(":core")
+    }
+}
