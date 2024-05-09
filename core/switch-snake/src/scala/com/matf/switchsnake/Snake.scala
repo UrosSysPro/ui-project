@@ -10,7 +10,9 @@ class Snake {
     parts = parts :+ SnakePart(parts.last.x, parts.last.y)
   }
   def init(width: Int,height: Int): Unit = {
-    parts = parts :+ SnakePart(width / 2, height / 2)
+    vx=1
+    vy=0
+    parts = Array(SnakePart(width / 2, height / 2))
   }
   def update(): Unit = {
     for(i <- 0 until parts.length-1){
@@ -22,11 +24,17 @@ class Snake {
   }
 
   def checkSelfCollision(): Boolean = {
-    for (part <- parts) if (part != parts.head && part.x == parts.head.x && part.y == parts.head.y) {
-      return true
+//    parts.find(p => p != parts.head && p.x == parts.head.x && p.y == parts.head.y) match {
+//      case Some(_:SnakePart) => true
+//      case None    => false
+//    }
+    var gameOver=false
+    for(i <- 1 until parts.length){
+      if(parts.head.x == parts(i).x && parts.head.y == parts(i).y)gameOver = true
     }
-    false
+    gameOver
   }
+
   def checkGameBorder(width:Int,height:Int): Unit = {
     if(parts.head.x<0)parts.head.x=width-1
     if(parts.head.y<0)parts.head.y=height-1

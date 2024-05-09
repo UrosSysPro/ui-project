@@ -41,8 +41,12 @@ class SwitchState extends State with Animatable{
           val switch=widget match {
             case switch: Switch=>switch
           }
-          switch.onChange(!switch.value)
-          true
+          if(switch.onChange!=null){
+            switch.onChange(!switch.value)
+            true
+          }else{
+            false
+          }
         }
       )
     )
@@ -101,5 +105,5 @@ object Switch{
   val selectedColor=new Vector4f(0.2f,0.8f,0.5f,1.0f)
   val unselectedColor=new Vector4f(0.8f,0.8f,0.8f,1.0f)
   val padding=2
-  def apply(value: Boolean,onChange:Boolean=>Unit=_=>{}): Switch = new Switch(value,onChange)
+  def apply(value: Boolean,onChange:Boolean=>Unit=null): Switch = new Switch(value,onChange)
 }
