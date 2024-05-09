@@ -2,6 +2,20 @@
 ## User Interface library ispired by Flutter, written in Scala
 
 
+### Download and run
+Clone the project and run all examples
+```
+git clone https://github.com/UrosSysPro/ui-project.git ui-project
+cd ui-project
+./gradlew core:run
+```
+
+### Getting started
+1. [Create a Window and display a widget](docs/CreateWindowAndDisplayWidget.md)
+2. [Stateful vs Stateless widget](docs/StatefulVsStateless.md)
+3. [Basic layout widgets](docs/LayoutWidgets.md)
+4. [Event listeners](docs/EventListeners.md)
+5. [Material and Cupertino package](docs/Design.md)
 
 <p style="float: left">
   <img src="./images/scala%20app.png">

@@ -5,8 +5,6 @@ import com.matf.ui.utils.tree.TreeBuilder
 import com.matf.ui.{Widget, WidgetRenderer}
 import org.joml.Vector2f
 
-import scala.collection.mutable
-
 abstract class StatefulWidget extends Widget{
   var state:State=null
   var child:Widget=null
