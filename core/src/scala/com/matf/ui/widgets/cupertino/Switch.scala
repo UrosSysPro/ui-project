@@ -4,11 +4,18 @@ import com.systemvi.engine.math.Bezier2f
 import com.matf.ui.Widget
 import com.matf.ui.utils.animation.{Animatable, AnimationController, AnimationStates}
 import com.matf.ui.utils.context.{BuildContext, DrawContext}
-import com.matf.ui.widgets.cupertino.Switch.{padding, selectedColor, unselectedColor}
+import com.matf.ui.utils.data.Colors
+import com.matf.ui.widgets.cupertino.Switch.padding
 import com.matf.ui.widgets.{GestureDetector, SizedBox, State, StatefulWidget}
 import org.joml.{Vector2f, Vector4f}
 
-class Switch(val value:Boolean,val onChange:Boolean=>Unit) extends StatefulWidget {
+class Switch(
+              val value:Boolean,
+              val onChange:Boolean=>Unit,
+              val backgroundColor:Vector4f,
+              val unselectedBackgroundColor:Vector4f,
+              val circleColor:Vector4f
+            ) extends StatefulWidget {
   override def createState(): State = new SwitchState()
 }
 
@@ -52,10 +59,7 @@ class SwitchState extends State with Animatable{
     )
   }
 
-  override def draw(context:DrawContext): Unit = {
-    val value=widget match {
-      case switch: Switch=>switch.value
-    }
+  override def draw(context:DrawContext): Unit = widget match{case widget:Switch=>
     val d = timing.get(controller.value).y
     val size=widget.size
     val position=widget.position
@@ -69,8 +73,8 @@ class SwitchState extends State with Animatable{
       size.x,
       size.y,
       new Vector4f()
-        .add(new Vector4f(selectedColor).mul(d))
-        .add(new Vector4f(unselectedColor).mul(1-d)),
+        .add(new Vector4f(widget.backgroundColor).mul(d))
+        .add(new Vector4f(widget.unselectedBackgroundColor).mul(1-d)),
       size.y/2,blur = 1,
       context
     )
@@ -93,7 +97,7 @@ class SwitchState extends State with Animatable{
       y+padding,
       circleSize-2*padding,
       circleSize-2*padding,
-      new Vector4f(1.0f),
+      widget.circleColor,
       (circleSize-2*padding)/2,
       blur = 1,
       context
@@ -102,8 +106,12 @@ class SwitchState extends State with Animatable{
 }
 
 object Switch{
-  val selectedColor=new Vector4f(0.2f,0.8f,0.5f,1.0f)
-  val unselectedColor=new Vector4f(0.8f,0.8f,0.8f,1.0f)
   val padding=2
-  def apply(value: Boolean,onChange:Boolean=>Unit=null): Switch = new Switch(value,onChange)
+  def apply(
+             value: Boolean,
+             onChange:Boolean=>Unit=null,
+             backgroundColor:Vector4f=Colors.green400,
+             unselectedBackgroundColor:Vector4f=Colors.gray300,
+             circleColor:Vector4f=Colors.white
+           ): Switch = new Switch(value,onChange,backgroundColor,unselectedBackgroundColor, circleColor)
 }

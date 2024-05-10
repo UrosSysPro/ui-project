@@ -25,6 +25,7 @@ class SnakeGameState extends State with Animatable{
   var controller:AnimationController=null
   var gameOver=false
   val random=new Random()
+  val food=SnakePart(random.nextInt(width),random.nextInt(height))
 
   override def init(): Unit = {
     controller=AnimationController(
@@ -35,6 +36,11 @@ class SnakeGameState extends State with Animatable{
           snake.update()
           snake.checkGameBorder(width,height)
           if(snake.checkSelfCollision())gameOver=true
+          if(snake.parts.head.x==food.x&& snake.parts.head.y==food.y){
+            snake.add()
+            food.x=random.nextInt(width)
+            food.y=random.nextInt(height)
+          }
           if(!gameOver){
             controller.value = 0
             controller.setState(AnimationStates.running)
@@ -70,10 +76,13 @@ class SnakeGameState extends State with Animatable{
                   width=55,
                   child=Column(
                     children = (0 until height).map{j=>
-                      Switch(value = snake.parts.find(part=> part.x==i && part.y==j) match {
+                      Switch(
+                        value = (snake.parts.find(part=> part.x==i && part.y==j) match {
                         case Some(_) => true
                         case None => false
-                      })
+                      }) || (food.x==i && food.y==j),
+                        backgroundColor = if(food.x==i && food.y==j)Colors.red500 else Colors.green400
+                      )
                     }.toArray
                   )
                 )
