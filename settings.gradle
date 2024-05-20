@@ -6,5 +6,5 @@
  */
 
 rootProject.name = 'ui-project'
-include 'core', 'core:switch-snake', 'core:dancing-range', 'core:paint', 'core:hello-world'
+include 'core', 'core:switch-snake', 'core:dancing-range', 'core:paint', 'core:hello-world', 'core:material-app'
 

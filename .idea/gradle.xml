@@ -12,6 +12,7 @@
             <option value="$PROJECT_DIR$/core" />
             <option value="$PROJECT_DIR$/core/dancing-range" />
             <option value="$PROJECT_DIR$/core/hello-world" />
+            <option value="$PROJECT_DIR$/core/material-app" />
             <option value="$PROJECT_DIR$/core/paint" />
             <option value="$PROJECT_DIR$/core/switch-snake" />
           </set>
